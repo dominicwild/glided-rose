@@ -23,12 +23,11 @@ class GildedRose {
 	}
 
 	private void updateQualityBeforeSellByDate(Item item) {
-		if (itemIsNotOneOf(item, SULFURAS, AGED_BRIE, BACKSTAGE_PASSES) && item.quality > 0) {
+		if (!itemIsOneOf(item, SULFURAS, AGED_BRIE, BACKSTAGE_PASSES) && item.quality > 0) {
 			item.quality = item.quality - 1;
 		}
 
-		if (item.name.equals(AGED_BRIE)
-				|| item.name.equals(BACKSTAGE_PASSES)) {
+		if (itemIsOneOf(item, AGED_BRIE, BACKSTAGE_PASSES)) {
 			if (item.quality < 50) {
 				item.quality = item.quality + 1;
 
@@ -49,13 +48,13 @@ class GildedRose {
 		}
 	}
 
-	private boolean itemIsNotOneOf(Item item, String... itemNames) {
+	private boolean itemIsOneOf(Item item, String... itemNames) {
 		for (String itemName : itemNames) {
 			if (item.name.equals(itemName)) {
-				return false;
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 
 	private void updateSellIn(Item item) {
