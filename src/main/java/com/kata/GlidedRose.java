@@ -30,7 +30,9 @@ class GildedRose {
 					item.quality = item.quality - 1;
 				}
 			}
-		} else {
+		}
+		if (item.name.equals(AGED_BRIE)
+				|| item.name.equals(BACKSTAGE_PASSES)) {
 			if (item.quality < 50) {
 				item.quality = item.quality + 1;
 
