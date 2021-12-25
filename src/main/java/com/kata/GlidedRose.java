@@ -26,7 +26,7 @@ class GildedRose {
 	}
 
 	private void updateQualityBeforeSellByDate(Item item) {
-		if (!itemIsOneOf(item, SULFURAS, AGED_BRIE, BACKSTAGE_PASSES) && item.quality > MIN_QUALITY_LIMIT) {
+		if (isARegularItem(item) && item.quality > MIN_QUALITY_LIMIT) {
 			item.quality = item.quality - 1;
 		}
 
@@ -76,23 +76,21 @@ class GildedRose {
 
 	private void updateQualityAfterSellByDate(Item item) {
 		if (item.sellIn < SELLIN_QUALITY_DEGREGATION_LIMIT) {
-			if (!item.name.equals(AGED_BRIE)) {
-				if (!item.name.equals(BACKSTAGE_PASSES)) {
-					if (item.quality > MIN_QUALITY_LIMIT) {
-						if (!item.name.equals(SULFURAS)) {
-							item.quality = item.quality - 1;
-						}
-					}
-				}
-				if (item.name.equals(BACKSTAGE_PASSES)) {
-					item.quality = 0;
-				}
+			if (isARegularItem(item) && item.quality > MIN_QUALITY_LIMIT) {
+				item.quality = item.quality - 1;
 			}
-			if (item.name.equals(AGED_BRIE)) {
-				if (itemBelowMaxQuality(item)) {
-					item.quality = item.quality + 1;
-				}
+
+			if (item.name.equals(BACKSTAGE_PASSES)) {
+				item.quality = 0;
+			}
+
+			if (item.name.equals(AGED_BRIE) && itemBelowMaxQuality(item)) {
+				item.quality = item.quality + 1;
 			}
 		}
+	}
+
+	private boolean isARegularItem(Item item) {
+		return !itemIsOneOf(item, AGED_BRIE, SULFURAS, BACKSTAGE_PASSES);
 	}
 }
