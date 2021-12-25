@@ -2,6 +2,7 @@ package com.kata;
 
 class GildedRose {
 
+	private static final int SELLIN_QUALITY_DEGREGATION_LIMIT = 0;
 	private static final int MIN_QUALITY_LIMIT = 0;
 	private static final int MAX_QUALITY_LIMIT = 50;
 	private static final String SULFURAS = "Sulfuras, Hand of Ragnaros";
@@ -74,10 +75,10 @@ class GildedRose {
 	}
 
 	private void updateQualityAfterSellByDate(Item item) {
-		if (item.sellIn < 0) {
+		if (item.sellIn < SELLIN_QUALITY_DEGREGATION_LIMIT) {
 			if (!item.name.equals(AGED_BRIE)) {
 				if (!item.name.equals(BACKSTAGE_PASSES)) {
-					if (item.quality > 0) {
+					if (item.quality > MIN_QUALITY_LIMIT) {
 						if (!item.name.equals(SULFURAS)) {
 							item.quality = item.quality - 1;
 						}
