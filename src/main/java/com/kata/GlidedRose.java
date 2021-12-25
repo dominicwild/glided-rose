@@ -83,10 +83,12 @@ class GildedRose {
 							item.quality = item.quality - 1;
 						}
 					}
-				} else {
+				}
+				if (item.name.equals(BACKSTAGE_PASSES)) {
 					item.quality = 0;
 				}
-			} else {
+			}
+			if (item.name.equals(AGED_BRIE)) {
 				if (itemBelowMaxQuality(item)) {
 					item.quality = item.quality + 1;
 				}
