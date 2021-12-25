@@ -92,6 +92,28 @@ public class AppTest {
 	}
 
 	@ParameterizedTest
+	@EnumSource(value = ItemType.class, names = { "SULFURAS" }, mode = Mode.EXCLUDE)
+	void all_items_sell_in_always_decreases_by_one_except_sulfuras(ItemType itemType) {
+		Item sulfuras = ItemFixture.create(itemType);
+		int expectedValue = sulfuras.sellIn - 1;
+
+		updateQuality(sulfuras);
+
+		assertEquals(expectedValue, sulfuras.sellIn);
+	}
+
+	@ParameterizedTest
+	@EnumSource(value = ItemType.class, names = { "SULFURAS" }, mode = Mode.INCLUDE)
+	void sulfuras_sell_in_does_not_decrease(ItemType itemType) {
+		Item sulfuras = ItemFixture.create(itemType);
+		int expectedValue = sulfuras.sellIn;
+
+		updateQuality(sulfuras);
+
+		assertEquals(expectedValue, sulfuras.sellIn);
+	}
+
+	@ParameterizedTest
 	@ValueSource(ints = { 11, 20, 50 })
 	void backstage_passes_increases_in_quality_by_one_with_sell_in_above_11(int sellInAbove10) {
 		Item backstagePasses = ItemFixture.create(ItemType.BACKSTAGE_PASSES);
